@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using Moq;
 using Microsoft.Extensions.Caching.Distributed;
-using DistributedResponseCachingMiddleware.DistrubtedReponseCache;
 using Microsoft.AspNetCore.ResponseCaching.Internal;
 using System;
 using System.IO;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Microsoft.Extensions.Primitives;
 using System.Threading;
+using ExternalNetcoreExtensions.Distributed;
 
 namespace DistributedResponseCachingMiddlewareTests
 {
