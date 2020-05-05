@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedResponseCachingMiddleware", "FlexibleResponseCachingMiddleware\DistributedResponseCachingMiddleware.csproj", "{0E40C5BA-9964-4898-87EF-8186267D3F6F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.ResponseCaching", "aspnetcore\src\Middleware\ResponseCaching\src\Microsoft.AspNetCore.ResponseCaching.csproj", "{71AE7DEF-3445-4E0C-95B2-0A49C496E66E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E40C5BA-9964-4898-87EF-8186267D3F6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E40C5BA-9964-4898-87EF-8186267D3F6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E40C5BA-9964-4898-87EF-8186267D3F6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E40C5BA-9964-4898-87EF-8186267D3F6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71AE7DEF-3445-4E0C-95B2-0A49C496E66E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71AE7DEF-3445-4E0C-95B2-0A49C496E66E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71AE7DEF-3445-4E0C-95B2-0A49C496E66E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71AE7DEF-3445-4E0C-95B2-0A49C496E66E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3825F593-F23B-4B22-8008-A0037534970A}
+	EndGlobalSection
+EndGlobal
