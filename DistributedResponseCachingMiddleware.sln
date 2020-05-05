@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedResponseCachingM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.ResponseCaching", "aspnetcore\src\Middleware\ResponseCaching\src\Microsoft.AspNetCore.ResponseCaching.csproj", "{71AE7DEF-3445-4E0C-95B2-0A49C496E66E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributedResponseCachingMiddlewareTests", "DistributedResponseCachingMiddlewareTests\DistributedResponseCachingMiddlewareTests.csproj", "{59F38E97-7DA8-402E-BA92-D5C5A635AFCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistributedResponseCachingMiddlewareTests", "DistributedResponseCachingMiddlewareTests\DistributedResponseCachingMiddlewareTests.csproj", "{59F38E97-7DA8-402E-BA92-D5C5A635AFCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
