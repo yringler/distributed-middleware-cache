@@ -10,6 +10,8 @@ using Microsoft.Extensions.Primitives;
 using System.Threading;
 using ExternalNetcoreExtensions.Distributed;
 using System.Text;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 
 namespace DistributedResponseCachingMiddlewareTests
 {
@@ -17,7 +19,7 @@ namespace DistributedResponseCachingMiddlewareTests
 	public class DistributedResponseCacheTests
 	{
 		[Test]
-		public void CanWriteCache()
+		public void CanWriteCachedResponse()
 		{
 			var mockDistributedCache = new Mock<IDistributedCache>();
 			var responseCache = new DistributedResponseCache(mockDistributedCache.Object);
@@ -72,6 +74,32 @@ namespace DistributedResponseCachingMiddlewareTests
 			string body = reader.ReadToEnd();
 
 			Assert.That(body, Is.EqualTo("data"));
+		}
+
+		[Test]
+		public void CanWriteCacheVaryByRules()
+		{
+			var cache = new MemoryDistributedCache(Options.Create(new MemoryDistributedCacheOptions()));
+			var responseCache = new DistributedResponseCache(cache);
+
+			using var stream = new MemoryStream();
+			using (var writer = new StreamWriter(stream, leaveOpen: true))
+			{
+				writer.Write("data");
+			}
+			stream.Position = 0;
+
+			Assert.That(() => responseCache.Set("test", new CachedVaryByRules
+			{
+				Headers = new StringValues("x-test-header"),
+				QueryKeys = new StringValues("x-test-query"),
+				VaryByKeyPrefix = "test"
+			}, TimeSpan.FromMinutes(1)), Throws.Nothing);
+
+			var item = responseCache.Get("test");
+			Assert.That(item, Is.Not.Null);
+			var realItem = item as CachedVaryByRules;
+			Assert.That(item, Is.Not.Null);
 		}
 	}
 }
