@@ -28,6 +28,12 @@ namespace ExternalNetcoreExtensions.Distributed
 		public async Task<IResponseCacheEntry> GetAsync(string key)
 		{
 			var bytes = await cache.GetAsync(key);
+
+			if (bytes == null)
+			{
+				return null;
+			}
+
 			using var stream = new MemoryStream(bytes);
 			var data = await JsonSerializer.DeserializeAsync<SerializableCachedResponse>(stream);
 
