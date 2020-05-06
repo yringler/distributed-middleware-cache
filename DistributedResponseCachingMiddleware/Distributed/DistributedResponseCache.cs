@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ExternalNetcoreExtensions.Custom;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCaching.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Primitives;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ExternalNetcoreExtensions.Distributed
 {
-	public class DistributedResponseCache : IResponseCache
+	public class DistributedResponseCache : ICustomResponseCache
 	{
 		private readonly IDistributedCache cache;
 

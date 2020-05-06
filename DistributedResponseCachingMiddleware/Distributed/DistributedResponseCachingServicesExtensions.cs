@@ -8,10 +8,14 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    /// <summary>
-    /// Extension methods for the ResponseCaching middleware.
-    /// </summary>
-    public static class DistributedResponseCachingServicesExtensions
+	/// <summary>
+	/// Extension methods for the ResponseCaching middleware.
+	/// </summary>
+	/// <remarks>
+	/// These are just wrappers around AddResponseCaching. For some reason, I get compilation errors
+	/// in my aspnetcore project when trying to call AddResponseCaching, because it's defined in two assemblies.
+	/// </remarks>
+	public static class DistributedResponseCachingServicesExtensions
     {
         /// <summary>
         /// Add response caching services.
@@ -20,14 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddDistributedResponseCaching(this IServiceCollection services)
         {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            services.AddMemoryCache();
-            services.TryAdd(ServiceDescriptor.Singleton<IResponseCachingPolicyProvider, ResponseCachingPolicyProvider>());
-            services.TryAdd(ServiceDescriptor.Singleton<IResponseCachingKeyProvider, ResponseCachingKeyProvider>());
+			services.AddResponseCaching();
 
             return services;
         }
@@ -40,17 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddDistributedResponseCaching(this IServiceCollection services, Action<ResponseCachingOptions> configureOptions)
         {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-            if (configureOptions == null)
-            {
-                throw new ArgumentNullException(nameof(configureOptions));
-            }
-
-            services.Configure(configureOptions);
-            services.AddDistributedResponseCaching();
+			services.AddResponseCaching(configureOptions);
 
             return services;
         }

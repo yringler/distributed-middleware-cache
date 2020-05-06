@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Primitives;
 using System.Threading;
 using ExternalNetcoreExtensions.Distributed;
+using System.Text;
 
 namespace DistributedResponseCachingMiddlewareTests
 {
@@ -43,6 +44,13 @@ namespace DistributedResponseCachingMiddlewareTests
 		{
 			string json = "{\"Created\":\"0001-01-01T00:00:00+00:00\",\"StatusCode\":0,\"Headers\":[{\"Key\":\"x-test-header\",\"Value\":[\"testing...testing\"]}],\"Body\":\"ZGF0YQ==\"}";
 			using var stream = new MemoryStream();
+
+			using (var binaryWriter = new BinaryWriter(stream, Encoding.UTF8, true))
+			{
+				binaryWriter.Write("SerializableCachedResponse");
+				binaryWriter.Flush();
+			}
+
 			using var writer = new StreamWriter(stream, leaveOpen: true);
 			writer.Write(json);
 			writer.Flush();
