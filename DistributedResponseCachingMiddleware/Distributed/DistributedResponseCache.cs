@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -35,9 +36,24 @@ namespace ExternalNetcoreExtensions.Distributed
 			}
 
 			using var stream = new MemoryStream(bytes);
-			var data = await JsonSerializer.DeserializeAsync<SerializableCachedResponse>(stream);
+			using var reader = new BinaryReader(stream, Encoding.UTF8, true);
 
-			return data.ToCachedResponse();
+			string cachedType = reader.ReadString();
+
+			if (cachedType == typeof(SerializableCachedResponse).Name)
+			{
+				var data = await JsonSerializer.DeserializeAsync<SerializableCachedResponse>(stream);
+				return data?.ToCachedResponse();
+			}
+			else if (cachedType == typeof(SerializableCacheVaryByRules).Name)
+			{
+				var data = await JsonSerializer.DeserializeAsync<SerializableCacheVaryByRules>(stream);
+				return data?.ToCachedVaryByRules();
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		public void Set(string key, IResponseCacheEntry entry, TimeSpan validFor)
@@ -47,10 +63,26 @@ namespace ExternalNetcoreExtensions.Distributed
 
 		public async Task SetAsync(string key, IResponseCacheEntry entry, TimeSpan validFor)
 		{
-			var cachedResponse = SerializableCachedResponse.From(entry as CachedResponse);
+			object serializableEntry = null;
+
+			if (entry is CachedResponse cachedResponse)
+			{
+				serializableEntry = SerializableCachedResponse.From(cachedResponse);
+			}
+			else if (entry is CachedVaryByRules varyByRules)
+			{
+				serializableEntry = SerializableCacheVaryByRules.From(varyByRules);
+			}
 
 			using var stream = new MemoryStream();
-			await JsonSerializer.SerializeAsync(stream, cachedResponse);
+
+			using (var writer = new BinaryWriter(stream, Encoding.UTF8, true))
+			{
+				writer.Write(serializableEntry.GetType().Name);
+				writer.Flush();
+			}
+
+			await JsonSerializer.SerializeAsync(stream, serializableEntry, serializableEntry.GetType());
 
 			await cache.SetAsync(key, stream.ToArray(), new DistributedCacheEntryOptions
 			{
@@ -103,7 +135,42 @@ namespace ExternalNetcoreExtensions.Distributed
 				Body = new MemoryStream(Body),
 				Headers = new HeaderDictionary(Headers.ToDictionary(
 					header => header.Key,
-					header => header.Value.Any() ? new StringValues(header.Value.ToArray()) : StringValues.Empty))
+					header => header.Value.Any() ? new StringValues(header.Value.ToArray()) : StringValues.Empty)),
+				StatusCode = StatusCode
+			};
+		}
+	}
+
+	public class SerializableCacheVaryByRules
+	{
+		public string VaryByKeyPrefix { get; set; }
+
+		public List<string> Headers { get; set; }
+
+		public List<string> QueryKeys { get; set; }
+
+		public static SerializableCacheVaryByRules From(CachedVaryByRules varyByRules)
+		{
+			if (varyByRules == null)
+			{
+				return null;
+			}
+
+			return new SerializableCacheVaryByRules
+			{
+				VaryByKeyPrefix = varyByRules.VaryByKeyPrefix,
+				Headers = varyByRules.Headers.ToList(),
+				QueryKeys = varyByRules.QueryKeys.ToList()
+			};
+		}
+
+		public CachedVaryByRules ToCachedVaryByRules()
+		{
+			return new CachedVaryByRules
+			{
+				VaryByKeyPrefix = VaryByKeyPrefix,
+				Headers = new StringValues(Headers.ToArray()),
+				QueryKeys = new StringValues(QueryKeys.ToArray())
 			};
 		}
 	}
