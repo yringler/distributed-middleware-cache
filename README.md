@@ -2,7 +2,7 @@
 A fork of ResponseCachingMiddleware which provides more flexibility. Note that it uses official aspnetcore code directly (via git submodules and csproj linking).
 
 ## DistributedResponseCache
-For usage see [ResonseCachingMiddleware](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/middleware?view=aspnetcore-3.1), just replace AddResponseCaching with AddDistributedResponseCaching, and UseResponseCaching with UseDistributedResponseCaching.<br>
+For usage see [ResponseCachingMiddleware](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/middleware?view=aspnetcore-3.1), just replace AddResponseCaching with AddDistributedResponseCaching, and UseResponseCaching with UseDistributedResponseCaching.<br>
 It will use whatever implentation of IDistributedCache that is injected into it.
 
 ## CustomReponseCache
