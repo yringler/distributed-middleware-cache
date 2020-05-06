@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 	<LangVersion>Latest</LangVersion>
-	<Version>2.0.1</Version>
-	<Description>An alternative to Microsoft.AspNetCore.ResponseCaching, which supports IDistributedCache.
+	<Version>2.5.0</Version>
+	<Description>An alternative to Microsoft.AspNetCore.ResponseCaching, which supports IDistributedCache, allows custom reponse caches, and provides a modifiable distributed response cache, which uses an injecting distributed cache, and options which allow clearing or ignoring the cache.
 It uses Microsoft.AspNetCore.ResponseCaching internally (via git submodule and linking in csproj)</Description>
 	<PackageProjectUrl></PackageProjectUrl>
 	<RepositoryUrl>https://github.com/yringler/distributed-middleware-cache</RepositoryUrl>
