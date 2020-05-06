@@ -14,7 +14,7 @@ using System.Text;
 namespace DistributedResponseCachingMiddlewareTests
 {
 	[TestFixture]
-	public class Tests
+	public class DistributedResponseCacheTests
 	{
 		[Test]
 		public void CanWriteCache()

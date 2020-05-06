@@ -142,7 +142,7 @@ namespace ExternalNetcoreExtensions.Distributed
 		}
 	}
 
-	public class SerializableCacheVaryByRules
+	internal class SerializableCacheVaryByRules
 	{
 		public string VaryByKeyPrefix { get; set; }
 

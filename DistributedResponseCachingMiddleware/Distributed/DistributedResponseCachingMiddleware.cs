@@ -16,7 +16,7 @@ namespace ExternalNetcoreExtensions.Distributed
 	/// could be generalized to create either a <see cref="DistributedResponseCache"/> or use an injected <see cref="Custom.ICustomResponseCache"/>
 	/// if one is present.
 	/// </remarks>
-	class DistributedResponseCachingMiddleware
+	public class DistributedResponseCachingMiddleware
 	{
 		private readonly ResponseCachingMiddleware responseCachingMiddleware;
 
