@@ -31,26 +31,26 @@ namespace ExternalNetcoreExtensions.ModifiableDistributed
 		public IResponseCacheEntry Get(string key)
 		{
 			if (cacheController.ShouldClearCache) distributedCache.Remove(key);
-			if (!cacheController.ShouldAllowReadFromCache) return null;
+			if (!cacheController.ShouldReadFromCache || cacheController.ShouldClearCache) return null;
 			return cache.Get(key);
 		}
 
 		public async Task<IResponseCacheEntry> GetAsync(string key)
 		{
 			if (cacheController.ShouldClearCache) await distributedCache.RemoveAsync(key);
-			if (!cacheController.ShouldAllowReadFromCache) return null;
+			if (!cacheController.ShouldReadFromCache || cacheController.ShouldClearCache) return null;
 			return await cache.GetAsync(key);
 		}
 
 		public void Set(string key, IResponseCacheEntry entry, TimeSpan validFor)
 		{
-			if (cacheController.ShouldIgnoreCache) return;
+			if (!cacheController.ShouldWriteToCache) return;
 			cache.Set(key, entry, validFor);
 		}
 
 		public async Task SetAsync(string key, IResponseCacheEntry entry, TimeSpan validFor)
 		{
-			if (cacheController.ShouldIgnoreCache) return;
+			if (!cacheController.ShouldWriteToCache) return;
 			await cache.SetAsync(key, entry, validFor);
 		}
 	}

@@ -12,19 +12,19 @@ namespace ExternalNetcoreExtensions.ModifiableDistributed
 	public interface IModifiableCacheController
 	{
 		/// <summary>
-		/// If the cache items should be cleared.
+		/// If the cache items should be cleared. This will not cause the entire cache to be cleared,
+		/// rather only the cached items whose access is attempted when this property is true.
 		/// </summary>
 		bool ShouldClearCache { get; }
 
 		/// <summary>
-		/// If the cache should be ignored. It won't be read from or written to.
+		/// If the cache can be read from.
 		/// </summary>
-		bool ShouldIgnoreCache { get; }
+		bool ShouldReadFromCache { get; }
 
 		/// <summary>
-		/// If reads from cache should be permitted. By default, only true if <see cref="ShouldIgnoreCache"/>
-		/// and <see cref="ShouldClearCache"/> are true. 
+		/// If the cache can be updated.
 		/// </summary>
-		bool ShouldAllowReadFromCache => !(ShouldClearCache || ShouldIgnoreCache);
+		bool ShouldWriteToCache { get; }
 	}
 }

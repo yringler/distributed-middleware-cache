@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 	<LangVersion>Latest</LangVersion>
-	<Version>2.5.0</Version>
+	<Version>3.0.0</Version>
 	<Description>An alternative to Microsoft.AspNetCore.ResponseCaching, which supports IDistributedCache, allows custom reponse caches, and provides a modifiable distributed response cache, which uses an injecting distributed cache, and options which allow clearing or ignoring the cache.
 It uses Microsoft.AspNetCore.ResponseCaching internally (via git submodule and linking in csproj)</Description>
 	<PackageProjectUrl></PackageProjectUrl>
@@ -12,10 +12,22 @@ It uses Microsoft.AspNetCore.ResponseCaching internally (via git submodule and l
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<RootNamespace>ExternalNetcoreExtensions</RootNamespace>
+	<IncludeSymbols>True</IncludeSymbols>
+	<IncludeSource>True</IncludeSource>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\DistributedResponseCachingMiddleware.xml</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
 
 	<ItemGroup>
