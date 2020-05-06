@@ -47,21 +47,10 @@ namespace ExternalNetcoreExtensions.Distributed
 
 		public async Task SetAsync(string key, IResponseCacheEntry entry, TimeSpan validFor)
 		{
-			var cachedResponse = entry as CachedResponse;
-
-			if (entry == null)
-			{
-				throw new Exception("Oh goodness, this isn't working out. Sorry about that.");
-			}
+			var cachedResponse = SerializableCachedResponse.From(entry as CachedResponse);
 
 			using var stream = new MemoryStream();
-			await JsonSerializer.SerializeAsync(stream, SerializableCachedResponse.From(cachedResponse));
-
-
-			using var reader = new StreamReader(stream);
-
-			stream.Position = 0;
-			Console.WriteLine(reader.ReadToEnd());
+			await JsonSerializer.SerializeAsync(stream, cachedResponse);
 
 			await cache.SetAsync(key, stream.ToArray(), new DistributedCacheEntryOptions
 			{
@@ -82,18 +71,28 @@ namespace ExternalNetcoreExtensions.Distributed
 
 		public static SerializableCachedResponse From(CachedResponse cachedResponse)
 		{
-			using var stream = new MemoryStream();
-			cachedResponse.Body.CopyTo(stream);
+			if (cachedResponse == null)
+			{
+				return null;
+			}
 
-			return new SerializableCachedResponse
+			var response =  new SerializableCachedResponse
 			{
 				Created = cachedResponse.Created,
 				StatusCode = cachedResponse.StatusCode,
 				Headers = cachedResponse.Headers
 					.Select(header => new KeyValuePair<string, List<string>>(header.Key, header.Value.ToList()))
-					.ToList(),
-				Body = stream.ToArray()
+					.ToList()
 			};
+
+			if (cachedResponse.Body != null)
+			{
+				using var stream = new MemoryStream();
+				cachedResponse.Body.CopyTo(stream);
+				response.Body = stream.ToArray();
+			}
+
+			return response;
 		}
 
 		public CachedResponse ToCachedResponse()
