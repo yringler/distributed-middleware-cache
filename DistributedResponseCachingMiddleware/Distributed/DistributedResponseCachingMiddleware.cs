@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ExternalNetcoreExtensions.Utility;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCaching;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -19,15 +21,21 @@ namespace ExternalNetcoreExtensions.Distributed
 	{
 		private readonly ResponseCachingMiddleware responseCachingMiddleware;
 
-		public DistributedResponseCachingMiddleware(RequestDelegate next,
+		public DistributedResponseCachingMiddleware(
+			RequestDelegate next,
 			IOptions<ResponseCachingOptions> options,
 			ILoggerFactory loggerFactory,
-			IResponseCachingPolicyProvider policyProvider,
-			IDistributedCache cache,
-			IResponseCachingKeyProvider keyProvider)
+			ObjectPoolProvider poolProvider,
+			IDistributedCache cache)
 		{
 			var distributedResponseCache = new DistributedResponseCache(cache);
-			responseCachingMiddleware = new ResponseCachingMiddleware(next, options, loggerFactory, policyProvider, distributedResponseCache, keyProvider);
+			responseCachingMiddleware = new ResponseCachingMiddleware(
+				next,
+				options,
+				loggerFactory,
+				CustomResponseCachingOptions.GetPolicy(options.Value),
+				distributedResponseCache,
+				new ResponseCachingKeyProvider(poolProvider, options));
 		}
 
 		public async Task Invoke(HttpContext httpContext)

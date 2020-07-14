@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using ExternalNetcoreExtensions.Utility;
 using Microsoft.AspNetCore.ResponseCaching;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -34,11 +35,10 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="services">The <see cref="IServiceCollection"/> for adding services.</param>
         /// <param name="configureOptions">A delegate to configure the <see cref="ResponseCachingOptions"/>.</param>
         /// <returns></returns>
-        public static IServiceCollection AddDistributedResponseCaching(this IServiceCollection services, Action<ResponseCachingOptions> configureOptions)
+        public static IServiceCollection AddDistributedResponseCaching(this IServiceCollection services, Action<CustomResponseCachingOptions> configureOptions)
         {
-			services.AddResponseCaching(configureOptions);
-
-            return services;
+			services.Configure(configureOptions);
+			return services.AddDistributedResponseCaching();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ExternalNetcoreExtensions.Utility;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCaching;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,7 @@ namespace ExternalNetcoreExtensions.Custom
 			ILoggerFactory loggerFactory,
 			ICustomResponseCache cache,
 			ObjectPoolProvider poolProvider)
-			: this(next, options, loggerFactory, new ResponseCachingPolicyProvider(), cache, new ResponseCachingKeyProvider(poolProvider, options))
+			: this(next, options, loggerFactory, CustomResponseCachingOptions.GetPolicy(options.Value), cache, new ResponseCachingKeyProvider(poolProvider, options))
 		{
 		}
 
@@ -38,5 +39,7 @@ namespace ExternalNetcoreExtensions.Custom
 		{
 			await responseCachingMiddleware.Invoke(httpContext);
 		}
+
+
 	}
 }

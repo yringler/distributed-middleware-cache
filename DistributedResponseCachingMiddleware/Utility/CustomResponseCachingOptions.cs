@@ -15,5 +15,15 @@ namespace ExternalNetcoreExtensions.Utility
 		/// If you want such requests to be cached, set this to true.
 		/// </summary>
 		public bool CacheAuthorizedRequest { get; set; }
+
+		internal static IResponseCachingPolicyProvider GetPolicy(ResponseCachingOptions options)
+		{
+			if (options is CustomResponseCachingOptions customOptions && customOptions.CacheAuthorizedRequest)
+			{
+				return new CacheAuthorizedRequestsResponseCachingPolicyProvider();
+			}
+
+			return new ResponseCachingPolicyProvider();
+		}
 	}
 }
