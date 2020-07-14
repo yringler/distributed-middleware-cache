@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCaching;
-using Microsoft.AspNetCore.ResponseCaching.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -16,7 +15,7 @@ namespace ExternalNetcoreExtensions.Distributed
 	/// could be generalized to create either a <see cref="DistributedResponseCache"/> or use an injected <see cref="Custom.ICustomResponseCache"/>
 	/// if one is present.
 	/// </remarks>
-	public class DistributedResponseCachingMiddleware
+	internal class DistributedResponseCachingMiddleware
 	{
 		private readonly ResponseCachingMiddleware responseCachingMiddleware;
 

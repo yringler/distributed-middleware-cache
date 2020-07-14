@@ -1,8 +1,8 @@
 ﻿using System;
 using ExternalNetcoreExtensions.Custom;
 using ExternalNetcoreExtensions.ModifiableDistributed;
+using ExternalNetcoreExtensions.Utility;
 using Microsoft.AspNetCore.ResponseCaching;
-using Microsoft.AspNetCore.ResponseCaching.Internal;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -37,7 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
 		/// <param name="services">The <see cref="IServiceCollection"/> for adding services.</param>
 		/// <param name="configureOptions">A delegate to configure the <see cref="ResponseCachingOptions"/>.</param>
 		/// <returns></returns>
-		public static IServiceCollection AddModifiableDistributedResponseCache(this IServiceCollection services, Action<ResponseCachingOptions> configureOptions)
+		public static IServiceCollection AddModifiableDistributedResponseCache(this IServiceCollection services, Action<CustomResponseCachingOptions> configureOptions)
 		{
 			if (services == null)
 			{

@@ -42,9 +42,9 @@ It uses Microsoft.AspNetCore.ResponseCaching internally (via git submodule and l
 	  <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
 	  <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.ResponseCaching.Abstractions" Version="2.2.0" />
-	  <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.3" />
-	  <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.3" />
-	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.3" />
+	  <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.5" />
+	  <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.5" />
+	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.5" />
 	  <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
