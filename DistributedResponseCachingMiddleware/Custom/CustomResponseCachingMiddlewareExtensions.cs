@@ -3,7 +3,7 @@ using System;
 
 namespace Microsoft.AspNetCore.Builder
 {
-	public static class CustomResponseCachingMiddlewareExtensions
+    public static class CustomResponseCachingMiddlewareExtensions
 	{
 		public static IApplicationBuilder UseCustomResponseCaching(this IApplicationBuilder app)
 		{
@@ -14,5 +14,5 @@ namespace Microsoft.AspNetCore.Builder
 
 			return app.UseMiddleware<CustomResponseCachingMiddleware>();
 		}
-	}
+    }
 }

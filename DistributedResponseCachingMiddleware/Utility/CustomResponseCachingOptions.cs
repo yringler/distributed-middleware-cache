@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.ResponseCaching;
+﻿using System;
+using ExternalNetcoreExtensions.Custom;
+using Microsoft.AspNetCore.ResponseCaching;
 
 namespace ExternalNetcoreExtensions.Utility
 {
@@ -12,5 +14,14 @@ namespace ExternalNetcoreExtensions.Utility
 		/// If you want such requests to be cached, set this to true.
 		/// </summary>
 		public bool CacheAuthorizedRequest { get; set; }
+
+        public ResponseCachingStrategy ResponseCachingStrategy { get; set; }
     }
+
+    public enum ResponseCachingStrategy
+    {
+        Local = 1,
+		Distributed,
+        ModifiableDistributed
+	}
 }

@@ -21,7 +21,7 @@ namespace ExternalNetcoreExtensions.Utility
                 throw new ArgumentNullException(nameof(services));
             }
 
-            services.Add(ServiceDescriptor.Singleton<IResponseCachingPolicyProvider, CacheAuthorizedRequestsResponseCachingPolicyProvider>());
+            services.AddSingleton<IResponseCachingPolicyProvider, CacheAuthorizedRequestsResponseCachingPolicyProvider>();
             return services;
         }
     }

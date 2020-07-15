@@ -1,3 +1,4 @@
+using ExternalNetcoreExtensions.Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,8 +15,6 @@ namespace WeatherApi
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -26,10 +25,14 @@ namespace WeatherApi
                 options.InstanceName = "redisserver";
             });
 
-            services.AddDistributedResponseCaching(options => options.CacheAuthorizedRequest = true);
+            services.AddResponseCaching(options =>
+            {
+                options.CacheAuthorizedRequest = true;
+                options.ResponseCachingStrategy = ResponseCachingStrategy.Distributed;
+            });
+            //services.AddDefaultResponseCaching(); // TODO: This should be able to call services.AddResponseCaching();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -40,7 +43,7 @@ namespace WeatherApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseDistributedResponseCaching();
+            app.UseCustomResponseCaching();
 
             app.UseAuthorization();
 
