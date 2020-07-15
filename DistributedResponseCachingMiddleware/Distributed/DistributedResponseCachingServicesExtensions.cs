@@ -1,21 +1,20 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using ExternalNetcoreExtensions.Utility;
 using Microsoft.AspNetCore.ResponseCaching;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-	/// <summary>
-	/// Extension methods for the ResponseCaching middleware.
-	/// </summary>
-	/// <remarks>
-	/// These are just wrappers around AddResponseCaching. For some reason, I get compilation errors
-	/// in my aspnetcore project when trying to call AddResponseCaching, because it's defined in two assemblies.
-	/// </remarks>
-	public static class DistributedResponseCachingServicesExtensions
+    /// <summary>
+    /// Extension methods for the ResponseCaching middleware.
+    /// </summary>
+    /// <remarks>
+    /// These are just wrappers around AddResponseCaching. For some reason, I get compilation errors
+    /// in my aspnetcore project when trying to call AddResponseCaching, because it's defined in two assemblies.
+    /// </remarks>
+    public static class DistributedResponseCachingServicesExtensions
     {
         /// <summary>
         /// Add response caching services.
@@ -37,8 +36,14 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddDistributedResponseCaching(this IServiceCollection services, Action<CustomResponseCachingOptions> configureOptions)
         {
-			services.Configure(configureOptions);
-			return services.AddDistributedResponseCaching();
+            var options = new CustomResponseCachingOptions();
+            configureOptions?.Invoke(options);
+            if (options.CacheAuthorizedRequest)
+            {
+                services.AddCacheAuthorizedRequestsResponseCachingPolicy();
+            }
+            services.Configure(configureOptions);
+            return services.AddDistributedResponseCaching();
         }
     }
 }

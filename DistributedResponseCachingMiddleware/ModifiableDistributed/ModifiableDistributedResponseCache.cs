@@ -1,10 +1,8 @@
 ﻿using ExternalNetcoreExtensions.Custom;
 using ExternalNetcoreExtensions.Distributed;
-using Microsoft.AspNetCore.ResponseCaching;
+using Microsoft.AspNetCore.ResponseCaching.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ExternalNetcoreExtensions.ModifiableDistributed

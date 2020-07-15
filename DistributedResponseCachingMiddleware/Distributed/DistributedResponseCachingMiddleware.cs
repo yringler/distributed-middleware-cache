@@ -1,13 +1,11 @@
 ﻿using ExternalNetcoreExtensions.Utility;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCaching;
+using Microsoft.AspNetCore.ResponseCaching.Internal;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ExternalNetcoreExtensions.Distributed
@@ -25,6 +23,7 @@ namespace ExternalNetcoreExtensions.Distributed
 			RequestDelegate next,
 			IOptions<ResponseCachingOptions> options,
 			ILoggerFactory loggerFactory,
+            IResponseCachingPolicyProvider responseCachingPolicyProvider,
 			ObjectPoolProvider poolProvider,
 			IDistributedCache cache)
 		{
@@ -33,7 +32,7 @@ namespace ExternalNetcoreExtensions.Distributed
 				next,
 				options,
 				loggerFactory,
-				CustomResponseCachingOptions.GetPolicy(options.Value),
+                responseCachingPolicyProvider,
 				distributedResponseCache,
 				new ResponseCachingKeyProvider(poolProvider, options));
 		}

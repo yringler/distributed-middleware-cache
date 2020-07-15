@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.ResponseCaching;
-using Microsoft.Extensions.Primitives;
-using Microsoft.Net.Http.Headers;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.AspNetCore.ResponseCaching.Internal;
 
 namespace ExternalNetcoreExtensions.Utility
 {
@@ -21,7 +16,7 @@ namespace ExternalNetcoreExtensions.Utility
 			// Verify the method
 			if (!HttpMethods.IsGet(request.Method) && !HttpMethods.IsHead(request.Method))
 			{
-				context.Logger.RequestMethodNotCacheable(request.Method);
+				context.Logger.LogRequestMethodNotCacheable(request.Method);
 				return false;
 			}
 
