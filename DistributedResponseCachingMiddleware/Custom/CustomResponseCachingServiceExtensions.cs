@@ -6,7 +6,7 @@ using ExternalNetcoreExtensions.Distributed;
 using ExternalNetcoreExtensions.Utility;
 using System;
 using ExternalNetcoreExtensions.ModifiableDistributed;
-using Microsoft.AspNetCore.ResponseCaching.Internal;
+using Microsoft.AspNetCore.ResponseCaching;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

@@ -1,6 +1,6 @@
 ﻿using ExternalNetcoreExtensions.Custom;
 using ExternalNetcoreExtensions.Distributed;
-using Microsoft.AspNetCore.ResponseCaching.Internal;
+using Microsoft.AspNetCore.ResponseCaching;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Threading.Tasks;

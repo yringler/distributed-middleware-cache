@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.ResponseCaching.Internal;
+﻿using Microsoft.AspNetCore.ResponseCaching;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

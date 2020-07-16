@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.ResponseCaching.Internal;
+using Microsoft.AspNetCore.ResponseCaching;
 
 namespace ExternalNetcoreExtensions.Utility
 {
@@ -16,7 +16,7 @@ namespace ExternalNetcoreExtensions.Utility
 			// Verify the method
 			if (!HttpMethods.IsGet(request.Method) && !HttpMethods.IsHead(request.Method))
 			{
-				context.Logger.LogRequestMethodNotCacheable(request.Method);
+				context.Logger.RequestMethodNotCacheable(request.Method);
 				return false;
 			}
 
