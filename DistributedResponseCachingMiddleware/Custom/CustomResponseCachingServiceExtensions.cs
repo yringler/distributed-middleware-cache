@@ -1,12 +1,12 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using ExternalNetcoreExtensions.Custom;
 using ExternalNetcoreExtensions.Distributed;
-using ExternalNetcoreExtensions.Utility;
-using System;
 using ExternalNetcoreExtensions.ModifiableDistributed;
+using ExternalNetcoreExtensions.Utility;
 using Microsoft.AspNetCore.ResponseCaching;
+using Microsoft.Extensions.Caching.Memory;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -24,7 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
     /// an IDistributedCache, or a ICustomResponseCache if it's available.
     /// </remarks>
     public static class CustomResponseCachingServiceExtensions
-	{
+    {
         public static IServiceCollection AddDefaultResponseCaching(this IServiceCollection services)
         {
             if (services == null)
@@ -35,40 +35,43 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
-		/// <summary>
-		/// Add response caching services and configure the related options.
-		/// </summary>
-		/// <param name="services">The <see cref="IServiceCollection"/> for adding services.</param>
-		/// <returns></returns>
-		public static IServiceCollection AddResponseCaching(this IServiceCollection services, Action<CustomResponseCachingOptions> configureOptions)
+        /// <summary>
+        /// Add response caching services and configure the related options.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> for adding services.</param>
+        /// <returns></returns>
+        public static IServiceCollection AddResponseCaching(this IServiceCollection services, Action<CustomResponseCachingOptions> configureOptions)
         {
             if (services == null)
-			{
-				throw new ArgumentNullException(nameof(services));
-			}
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
 
             var options = new CustomResponseCachingOptions();
             configureOptions(options);
+            services.Configure(configureOptions);
 
             _ = options.ResponseCachingStrategy switch
             {
                 ResponseCachingStrategy.Distributed => services.RegisterResponseCache<DistributedResponseCache>(),
                 ResponseCachingStrategy.ModifiableDistributed => services.RegisterResponseCache<ModifiableDistributedResponseCache>(),
-                _ => services.RegisterResponseCache<MemoryResponseCache>()
-            };
+                _ => services.AddSingleton<IMemoryCache, MemoryCache>()
+                    .RegisterResponseCache(x => new MemoryResponseCache(x.GetRequiredService<IMemoryCache>()))
 
+            };
             if (options.CacheAuthorizedRequest)
             {
                 services.AddCacheAuthorizedRequestsResponseCachingPolicy();
             }
-
             services.AddResponseCaching();
             return services;
         }
 
-        private static IServiceCollection RegisterResponseCache<T>(this IServiceCollection services) where T : class, IResponseCache
+        private static IServiceCollection RegisterResponseCache<T>(this IServiceCollection services, Func<IServiceProvider, T> responseCache = default)
+            where T : class, IResponseCache
         {
-            return services.AddSingleton<IResponseCache, T>();
+            return responseCache == default ? services.AddSingleton<IResponseCache, T>() :
+                services.AddSingleton<IResponseCache>(responseCache);
         }
     }
 }

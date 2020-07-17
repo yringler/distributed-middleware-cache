@@ -21,7 +21,7 @@ namespace ExternalNetcoreExtensions.Utility
     public enum ResponseCachingStrategy
     {
         Local = 1,
-		Distributed,
-        ModifiableDistributed
+		Distributed = 2,
+        ModifiableDistributed = 3
 	}
 }

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace ExternalNetcoreExtensions.ModifiableDistributed
 {
 	/// <summary>
-	/// An implementation of <see cref="ICustomResponseCache"/> response cache which allows for custom cache control
+	/// An implementation of <see cref="IResponseCache"/> response cache which allows for custom cache control
 	/// with <see cref="IModifiableCacheController"/>.
 	/// For use with <see cref="CustomResponseCachingMiddleware"/>.
 	/// In order to use, must inject a <see cref="IModifiableCacheController"/>. 
 	/// </summary>
-	internal class ModifiableDistributedResponseCache : ICustomResponseCache
+	internal class ModifiableDistributedResponseCache : IResponseCache
 	{
 		private readonly DistributedResponseCache cache;
 		private readonly IDistributedCache distributedCache;

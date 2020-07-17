@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ExternalNetcoreExtensions.Distributed
 {
-	internal class DistributedResponseCache : ICustomResponseCache
+	internal class DistributedResponseCache : IResponseCache
 	{
 		private readonly IDistributedCache cache;
 
