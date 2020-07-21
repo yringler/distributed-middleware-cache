@@ -16,15 +16,14 @@ namespace Microsoft.Extensions.DependencyInjection
     /// <remarks>
     /// These are just wrappers around AddResponseCaching. For some reason, I get compilation errors
     /// in my aspnetcore project when trying to call AddResponseCaching, because it's defined in two assemblies.
-    /// 
-    /// Note that this is a copypasta from <see cref="DistributedResponseCachingServicesExtensions"/>. I added it
-    /// to make the API symmetrical.
-    /// 
-    /// In a later version, perhaps DistributedResponseCaching will be deprecated, and the CustomResponseCache will use either
-    /// an IDistributedCache, or a ICustomResponseCache if it's available.
     /// </remarks>
     public static class CustomResponseCachingServiceExtensions
     {
+        /// <summary>
+        /// Add response caching services with the default aspnetcore options. Use AddResponseCaching to use custom options
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> for adding services.</param>
+        /// <returns></returns>
         public static IServiceCollection AddDefaultResponseCaching(this IServiceCollection services)
         {
             if (services == null)
@@ -67,6 +66,13 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
+        /// <summary>
+        /// Registers a response cache implementation that will be use to cache responses
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="responseCache"></param>
+        /// <returns></returns>
         private static IServiceCollection RegisterResponseCache<T>(this IServiceCollection services, Func<IServiceProvider, T> responseCache = default)
             where T : class, IResponseCache
         {

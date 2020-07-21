@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.ResponseCaching;
-using Microsoft.Extensions.DependencyInjection;
+﻿using ExternalNetcoreExtensions.Utility;
+using Microsoft.AspNetCore.ResponseCaching;
 using System;
 
-namespace ExternalNetcoreExtensions.Utility
+namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
     /// Extension methods for the ResponseCaching Policies.
@@ -10,7 +10,7 @@ namespace ExternalNetcoreExtensions.Utility
     public static class CustomResponseCachingPolicyProviderExtensions
     {
         /// <summary>
-        /// Add policy that allows caching even if it exists an Authorization header.
+        /// Add policy that allows caching even if an Authorization header exists.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> for adding services.</param>
         /// <returns></returns>
