@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ExternalNetcoreExtensions.ModifiableDistributed
+﻿namespace ExternalNetcoreExtensions.ModifiableDistributed
 {
-	/// <summary>
-	/// Controls <see cref="ModifiableDistributedResponseCache"/>, telling it how to treat the cache.
-	/// For example, you may have custom headers whose presence you want to cause to clear
-	/// cache values relevant to that request.
-	/// </summary>
-	public interface IModifiableCacheController
+    /// <summary>
+    /// Controls <see cref="ModifiableDistributedResponseCache"/>, telling it how to treat the cache.
+    /// For example, you may have custom headers whose presence you want to cause to clear
+    /// cache values relevant to that request.
+    /// </summary>
+    public interface IModifiableCacheController
 	{
 		/// <summary>
 		/// If the cache items should be cleared. This will not cause the entire cache to be cleared,

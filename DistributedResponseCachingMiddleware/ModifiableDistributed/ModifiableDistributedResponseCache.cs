@@ -1,21 +1,19 @@
 ﻿using ExternalNetcoreExtensions.Custom;
 using ExternalNetcoreExtensions.Distributed;
-using Microsoft.AspNetCore.ResponseCaching.Internal;
+using Microsoft.AspNetCore.ResponseCaching;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ExternalNetcoreExtensions.ModifiableDistributed
 {
 	/// <summary>
-	/// An implementation of <see cref="ICustomResponseCache"/> response cache which allows for custom cache control
+	/// An implementation of <see cref="IResponseCache"/> response cache which allows for custom cache control
 	/// with <see cref="IModifiableCacheController"/>.
 	/// For use with <see cref="CustomResponseCachingMiddleware"/>.
 	/// In order to use, must inject a <see cref="IModifiableCacheController"/>. 
 	/// </summary>
-	public class ModifiableDistributedResponseCache : ICustomResponseCache
+	internal class ModifiableDistributedResponseCache : IResponseCache
 	{
 		private readonly DistributedResponseCache cache;
 		private readonly IDistributedCache distributedCache;
