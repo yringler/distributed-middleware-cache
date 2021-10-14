@@ -62,6 +62,10 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 services.AddCacheAuthorizedRequestsResponseCachingPolicy();
             }
+            else
+            {
+                services.AddSingleton<IResponseCachingPolicyProvider, ResponseCachingPolicyProvider>();
+            }
             services.AddResponseCaching();
             return services;
         }
