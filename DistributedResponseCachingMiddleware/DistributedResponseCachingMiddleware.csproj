@@ -33,6 +33,9 @@ It uses Microsoft.AspNetCore.ResponseCaching internally (via git submodule and l
   </PropertyGroup>
 
 	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>DistributedResponseCachingMiddlewareTests</_Parameter1>
+		</AssemblyAttribute>
 		<Compile Include="..\aspnetcore\src\Middleware\ResponseCaching\src\**\*.cs" Exclude="..\aspnetcore\src\Middleware\ResponseCaching\src\obj\**\*.*">
 			<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
 		</Compile>
