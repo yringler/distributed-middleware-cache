@@ -1,17 +1,17 @@
-using NUnit.Framework;
-using Moq;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.AspNetCore.ResponseCaching.Internal;
-using System;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using Microsoft.Extensions.Primitives;
-using System.Threading;
 using ExternalNetcoreExtensions.Distributed;
-using System.Text;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCaching;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
+using Moq;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading;
 
 namespace DistributedResponseCachingMiddlewareTests
 {
