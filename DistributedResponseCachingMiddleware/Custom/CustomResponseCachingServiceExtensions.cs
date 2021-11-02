@@ -48,7 +48,15 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var options = new CustomResponseCachingOptions();
             configureOptions(options);
+
             services.Configure(configureOptions);
+            services.Configure<ResponseCachingOptions>(baseOptions =>
+            {
+                baseOptions.SizeLimit = options.SizeLimit;
+                baseOptions.MaximumBodySize = options.MaximumBodySize;
+                baseOptions.UseCaseSensitivePaths = options.UseCaseSensitivePaths;
+                baseOptions.SystemClock = options.SystemClock;
+            });
 
             _ = options.ResponseCachingStrategy switch
             {
@@ -61,6 +69,10 @@ namespace Microsoft.Extensions.DependencyInjection
             if (options.CacheAuthorizedRequest)
             {
                 services.AddCacheAuthorizedRequestsResponseCachingPolicy();
+            }
+            else
+            {
+                services.AddSingleton<IResponseCachingPolicyProvider, ResponseCachingPolicyProvider>();
             }
             services.AddResponseCaching();
             return services;
